@@ -3,40 +3,194 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OM43 — Soutenir</title>
-  <meta name="description" content="OM43 — Soutenez le projet avec une donation en cryptomonnaie via NOWPayments">
+  <title>OM43 — Architecture & Projets</title>
+  <meta name="description" content="Découvrez l'écosystème OM43 : une infrastructure microservices déployée sur Vercel et Render.">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+      background: #0a0a14;
       color: #e0e0e0;
+      overflow-x: hidden;
+    }
+
+    /* ─── Hero ─── */
+    .hero {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-    }
-    .container {
       text-align: center;
       padding: 2rem;
-      max-width: 640px;
+      position: relative;
     }
-    h1 {
-      font-size: 3rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #f7931a, #ffd700);
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(247,147,26,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, rgba(0,100,255,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #f7931a, #ffd700, #ff6b35);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 0.5rem;
+      line-height: 1.1;
     }
-    p {
-      font-size: 1.1rem;
-      color: #a0a0b0;
-      margin-bottom: 2rem;
+    .hero .tagline {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: #8888aa;
+      margin-top: 1rem;
+      max-width: 600px;
       line-height: 1.6;
     }
+    .hero .scroll-hint {
+      margin-top: 3rem;
+      color: #555;
+      font-size: 0.9rem;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)}
+    }
+
+    /* ─── Section ─── */
+    section {
+      padding: 4rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    section .sub {
+      color: #6666aa;
+      margin-bottom: 3rem;
+      font-size: 1.05rem;
+    }
+
+    /* ─── Carousel ─── */
+    .carousel {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      padding: 1rem 0.5rem;
+      -webkit-overflow-scrolling: touch;
+    }
+    .carousel::-webkit-scrollbar { display: none; }
+    .card {
+      scroll-snap-align: start;
+      flex: 0 0 340px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 1.2rem;
+      padding: 1.8rem;
+      transition: transform 0.2s, border-color 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(247,147,26,0.3);
+    }
+    .card .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+      width: fit-content;
+    }
+    .badge.vercel { background: rgba(0,100,255,0.15); color: #66aaff; }
+    .badge.render { background: rgba(70,200,130,0.15); color: #46c882; }
+    .card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .card .domain {
+      font-size: 0.85rem;
+      color: #f7931a;
+      margin-bottom: 0.8rem;
+    }
+    .card .domain a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .card .domain a:hover { text-decoration: underline; }
+    .card p {
+      font-size: 0.9rem;
+      color: #9999bb;
+      line-height: 1.6;
+      flex: 1;
+    }
+    .card .mock-screenshot {
+      width: 100%;
+      height: 140px;
+      border-radius: 0.7rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      opacity: 0.6;
+    }
+    .mock-screenshot.video { background: linear-gradient(135deg, #1a1a3e, #2a1a3e); }
+    .mock-screenshot.payment { background: linear-gradient(135deg, #1a2a1e, #0a3a1e); }
+    .mock-screenshot.admin { background: linear-gradient(135deg, #2a1a1e, #3e1a1a); }
+    .mock-screenshot.bridge { background: linear-gradient(135deg, #1a1a2e, #1a2a4e); }
+    .mock-screenshot.links { background: linear-gradient(135deg, #2a2a1a, #4e3a1a); }
+    .mock-screenshot.viewer { background: linear-gradient(135deg, #1a2a2a, #0a3a3a); }
+    .mock-screenshot.subscribe { background: linear-gradient(135deg, #2a1a2a, #3e1a4e); }
+    .mock-screenshot.newsletter { background: linear-gradient(135deg, #1a1a2a, #2a2a4e); }
+    .mock-screenshot.points { background: linear-gradient(135deg, #2a2a2a, #4e4e1a); }
+
+    /* ─── Architecture ─── */
+    .arch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .arch-box {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 0.8rem;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .arch-box .icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+    .arch-box h4 { font-size: 0.95rem; font-weight: 600; }
+    .arch-box p { font-size: 0.8rem; color: #7777aa; margin-top: 0.3rem; }
+    .arch-arrow {
+      text-align: center;
+      color: #555;
+      font-size: 1.4rem;
+      padding: 0.3rem 0;
+    }
+
+    /* ─── Donation ─── */
+    .donation-section {
+      text-align: center;
+      padding: 5rem 1.5rem;
+      background: radial-gradient(ellipse at center, rgba(247,147,26,0.06), transparent 60%);
+    }
+    .donation-section h2 { margin-bottom: 0.5rem; }
+    .donation-section p { color: #8888aa; margin-bottom: 2rem; }
     .donation-wrapper {
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.06);
@@ -44,27 +198,186 @@
       padding: 2rem;
       display: inline-block;
     }
-    .donation-wrapper img {
-      max-width: 100%;
-      height: auto;
-    }
+    .donation-wrapper img { max-width: 100%; height: auto; }
+
+    /* ─── Footer ─── */
     footer {
-      margin-top: 3rem;
+      text-align: center;
+      padding: 2rem;
+      color: #444466;
       font-size: 0.85rem;
-      color: #606070;
+    }
+
+    @media (max-width: 640px) {
+      .card { flex: 0 0 280px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>OM43</h1>
-    <p>Soutenez le projet par donation en cryptomonnaie.</p>
-    <div class="donation-wrapper">
-      <a href="https://nowpayments.io/donation?api_key=a4b2370d-93d4-45a2-9f93-25eb3c7fc408" target="_blank" rel="noreferrer noopener">
-        <img src="https://nowpayments.io/images/embeds/donation-button-white.svg" alt="Cryptocurrency & Bitcoin donation button by NOWPayments">
-      </a>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <h1>OM43</h1>
+  <p class="tagline">
+    Un écosystème microservices — vidéo, paiements, accès, newsletters —
+    déployé sur <strong style="color:#66aaff">Vercel</strong> et <strong style="color:#46c882">Render</strong>.
+  </p>
+  <p class="scroll-hint">↓ découvrir</p>
+</div>
+
+<!-- ═══ CAROUSEL ═══ -->
+<section>
+  <h2>Projets</h2>
+  <p class="sub">Les services qui composent l'infrastructure OM43</p>
+  <div class="carousel">
+
+    <div class="card">
+      <span class="badge vercel">Vercel</span>
+      <div class="mock-screenshot video">🎬</div>
+      <h3>Super Vidéothèque</h3>
+      <div class="domain"><a href="https://video.onlymatt.ca" target="_blank">video.onlymatt.ca</a></div>
+      <p>Plateforme vidéo Netflix-style : catalogue, previews, live streaming HLS, validation d'accès Payhip/NOWPayments.</p>
     </div>
-    <footer>Propulsé par NOWPayments</footer>
+
+    <div class="card">
+      <span class="badge render">Render</span>
+      <div class="mock-screenshot video">⚙️</div>
+      <h3>API Vidéothèque</h3>
+      <div class="domain">super-videotheque-api.onrender.com</div>
+      <p>Backend Express : médias, locations, Jitsi JWT, webhooks NOWPayments, analytics, alertes email.</p>
+    </div>
+
+    <div class="card">
+      <span class="badge vercel">Vercel</span>
+      <div class="mock-screenshot payment">💳</div>
+      <h3>Payment Hub</h3>
+      <div class="domain"><a href="https://payment.onlymatt.ca" target="_blank">payment.onlymatt.ca</a></div>
+      <p>Hub central de paiement/accès. Providers abstraits (Payhip, NOWPayments), validation publique, admin produits.</p>
+    </div>
+
+    <div class="card">
+      <span class="badge vercel">Vercel</span>
+      <div class="mock-screenshot links">🔗</div>
+      <h3>Project Links</h3>
+      <div class="domain"><a href="https://projects.onlymatt.ca" target="_blank">projects.onlymatt.ca</a></div>
+      <p>Landing pages avec contenu protégé. Validation via payment-only, embeds paiement et abonnement.</p>
+    </div>
+
+    <div class="card">
+      <span class="badge vercel">Vercel</span>
+      <div class="mock-screenshot bridge">🌉</div>
+      <h3>Read-Only Bridge</h3>
+      <div class="domain"><a href="https://read.onlymatt.ca" target="_blank">read.onlymatt.ca</a></div>
+      <p>API pont entre only-admin et les consumers. Lit la DB Turso, signe les URLs Bunny CDN selon la provenance.</p>
+    </div>
+
+    <div class="card">
+      <span class="badge vercel">Vercel</span>
+      <div class="mock-screenshot admin">🛠️</div>
+      <h3>Only Admin</h3>
+      <div class="domain"><a href="https://admin.onlymatt.ca" target="_blank">admin.onlymatt.ca</a></div>
+      <p>Interface d'administration : upload vidéos Bunny Stream, gestion catalogue, tags, metadata AI coach.</p>
+    </div>
+
+    <div class="card">
+      <span class="badge vercel">Vercel</span>
+      <div class="mock-screenshot viewer">👁️</div>
+      <h3>Viewer Only</h3>
+      <div class="domain">viewer-only.vercel.app</div>
+      <p>Galerie média publique. Grille masonry, lecture vidéo, age gate 18+, consommation read-only.</p>
+    </div>
+
+    <div class="card">
+      <span class="badge vercel">Vercel</span>
+      <div class="mock-screenshot subscribe">📧</div>
+      <h3>Subscribe OnlyMatt</h3>
+      <div class="domain">subscribe-onlymatt.vercel.app</div>
+      <p>Système de collecte email + vérification 6 chiffres. Envoie liens magiques via Resend. Embed subscribe-button.js.</p>
+    </div>
+
+    <div class="card">
+      <span class="badge vercel">Vercel</span>
+      <div class="mock-screenshot newsletter">📰</div>
+      <h3>Tantric Newsletter</h3>
+      <div class="domain">tantric-newsletter.vercel.app</div>
+      <p>Newsletter automatique. Récupère les posts WordPress, envoie via Resend. Bilingue FR/EN, page désabonnement.</p>
+    </div>
+
+    <div class="card">
+      <span class="badge vercel">Vercel</span>
+      <div class="mock-screenshot points">⭐</div>
+      <h3>Auth Payment System</h3>
+      <div class="domain"><a href="https://points.onlymatt.ca" target="_blank">points.onlymatt.ca</a></div>
+      <p>Système de points Payhip + OAuth Google. Solde par email, historique transactions, admin packages.</p>
+    </div>
+
   </div>
+</section>
+
+<!-- ═══ ARCHITECTURE ═══ -->
+<section>
+  <h2>Architecture</h2>
+  <p class="sub">Comment les services communiquent entre eux</p>
+
+  <div class="arch-grid">
+    <div class="arch-box">
+      <div class="icon">🛠️</div>
+      <h4>Only Admin</h4>
+      <p>Écrit dans la DB Turso</p>
+    </div>
+    <div class="arch-box">
+      <div class="icon">🌉</div>
+      <h4>Read-Only Bridge</h4>
+      <p>Lit la DB, signe les URLs CDN</p>
+    </div>
+    <div class="arch-box">
+      <div class="icon">👁️</div>
+      <h4>Viewer / Projects / Vidéothèque</h4>
+      <p>Consomment read-only + payment-only</p>
+    </div>
+    <div class="arch-box">
+      <div class="icon">💳</div>
+      <h4>Payment Hub</h4>
+      <p>Source de vérité pour produits & accès</p>
+    </div>
+  </div>
+
+  <div class="arch-arrow">↓</div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-top:1rem">
+    <div class="arch-box" style="background:rgba(0,100,255,0.05);border-color:rgba(0,100,255,0.1)">
+      <h4 style="color:#66aaff">Vercel</h4>
+      <p>10 projets serverless<br>Frontends + APIs légères</p>
+    </div>
+    <div class="arch-box" style="background:rgba(70,200,130,0.05);border-color:rgba(70,200,130,0.1)">
+      <h4 style="color:#46c882">Render</h4>
+      <p>1 backend Express<br>API lourde avec Turso</p>
+    </div>
+    <div class="arch-box" style="background:rgba(247,147,26,0.05);border-color:rgba(247,147,26,0.1)">
+      <h4 style="color:#f7931a">Bunny CDN</h4>
+      <p>Stream vidéo + Storage<br>Signé selon provenance</p>
+    </div>
+    <div class="arch-box" style="background:rgba(100,100,200,0.05);border-color:rgba(100,100,200,0.1)">
+      <h4 style="color:#8888cc">Turso DB</h4>
+      <p>5 bases SQLite edge<br>Média, paiements, users</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DONATION ═══ -->
+<div class="donation-section">
+  <h2>Soutenir</h2>
+  <p>Contribuez au projet par donation en cryptomonnaie</p>
+  <div class="donation-wrapper">
+    <a href="https://nowpayments.io/donation?api_key=a4b2370d-93d4-45a2-9f93-25eb3c7fc408" target="_blank" rel="noreferrer noopener">
+      <img src="https://nowpayments.io/images/embeds/donation-button-white.svg" alt="Cryptocurrency & Bitcoin donation button by NOWPayments">
+    </a>
+  </div>
+</div>
+
+<footer>
+  OM43 — Propulsé par Vercel, Render, Turso, Bunny CDN & NOWPayments
+</footer>
+
 </body>
 </html>
