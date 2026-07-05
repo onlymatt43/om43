@@ -3,19 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OM43 — Architecture & Projets</title>
-  <meta name="description" content="Découvrez l'écosystème OM43 : une infrastructure microservices déployée sur Vercel et Render.">
+  <title>OM43 — ARCHIVE 43</title>
+  <meta name="description" content="Écosystème microservices OM43 — Artefact numérique entre futurisme et mémoire analogique.">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0a0a14;
-      color: #e0e0e0;
-      overflow-x: hidden;
+    :root {
+      --neon-orange: #f7931a;
+      --neon-blue: #00f0ff;
+      --neon-purple: #c026d3;
+      --vintage-cream: #f5e8c7;
+      --dark-void: #0a0a0f;
+      --deep-black: #050507;
     }
 
-    /* ─── Hero ─── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: var(--deep-black);
+      color: #ddd;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Vintage CRT + Noise Overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: 
+        linear-gradient(rgba(255,255,255,0.02) 50%, transparent 50%),
+        radial-gradient(circle at 30% 40%, rgba(247,147,26,0.06) 0%, transparent 50%);
+      background-size: 100% 4px, 200% 200%;
+      pointer-events: none;
+      z-index: 1;
+      animation: noise 0.8s steps(5) infinite;
+      opacity: 0.15;
+    }
+
+    @keyframes noise {
+      0% { background-position: 0 0; }
+      100% { background-position: 100% 100%; }
+    }
+
+    /* Scanlines */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0, 240, 255, 0.03) 3px,
+        rgba(0, 240, 255, 0.03) 6px
+      );
+      pointer-events: none;
+      z-index: 2;
+      animation: flicker 4s infinite alternate;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.25; }
+    }
+
+    /* Hero */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -25,359 +78,443 @@
       text-align: center;
       padding: 2rem;
       position: relative;
+      overflow: hidden;
     }
+
     .hero::before {
       content: '';
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(ellipse at 20% 50%, rgba(247,147,26,0.08) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 50%, rgba(0,100,255,0.08) 0%, transparent 50%);
-      pointer-events: none;
+      background: radial-gradient(circle at 50% 30%, rgba(192,38,211,0.15), transparent 60%),
+                  radial-gradient(circle at 20% 80%, rgba(0,240,255,0.12), transparent 60%);
+      z-index: 0;
     }
-    .hero h1 {
-      font-size: clamp(2.5rem, 8vw, 5rem);
+
+    .glitch {
+      font-size: clamp(3.5rem, 12vw, 8rem);
       font-weight: 900;
-      background: linear-gradient(135deg, #f7931a, #ffd700, #ff6b35);
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      position: relative;
+      color: var(--vintage-cream);
+      text-shadow: 
+        0 0 10px var(--neon-orange),
+        2px 2px 0 var(--neon-blue),
+        -2px -2px 0 var(--neon-purple);
+      animation: glitch-text 2s infinite alternate;
+    }
+
+    @keyframes glitch-text {
+      0% { transform: translate(0); }
+      20% { transform: translate(-3px, 3px); }
+      40% { transform: translate(3px, -3px); }
+      60% { transform: translate(-2px, 2px); }
+      100% { transform: translate(0); }
+    }
+
+    .hero .tagline {
+      font-size: clamp(1.1rem, 3vw, 1.6rem);
+      max-width: 620px;
+      margin-top: 1.5rem;
+      color: #aaa;
+      line-height: 1.4;
+      text-shadow: 0 0 15px rgba(0,240,255,0.5);
+      font-family: system-ui, sans-serif;
+    }
+
+    .scroll-hint {
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      letter-spacing: 3px;
+      color: var(--neon-orange);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    /* Sections */
+    section {
+      padding: 5rem 1.5rem;
+      max-width: 1280px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 3;
+    }
+
+    section h2 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      text-align: center;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, var(--neon-orange), var(--neon-blue), var(--neon-purple));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1.1;
-    }
-    .hero .tagline {
-      font-size: clamp(1rem, 2.5vw, 1.4rem);
-      color: #8888aa;
-      margin-top: 1rem;
-      max-width: 600px;
-      line-height: 1.6;
-    }
-    .hero .scroll-hint {
-      margin-top: 3rem;
-      color: #555;
-      font-size: 0.9rem;
-      animation: bounce 2s infinite;
-    }
-    @keyframes bounce {
-      0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)}
+      text-shadow: 0 0 30px rgba(247,147,26,0.5);
     }
 
-    /* ─── Section ─── */
-    section {
-      padding: 4rem 1.5rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    section h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-    section .sub {
-      color: #6666aa;
-      margin-bottom: 3rem;
-      font-size: 1.05rem;
+    .sub {
+      text-align: center;
+      color: #777;
+      font-size: 1.1rem;
+      max-width: 500px;
+      margin: 0 auto 3rem;
     }
 
-    /* ─── Carousel ─── */
-    .carousel {
-      display: flex;
-      gap: 1.5rem;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-      padding: 1rem 0.5rem;
-      -webkit-overflow-scrolling: touch;
+    /* Projects Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.8rem;
     }
-    .carousel::-webkit-scrollbar { display: none; }
+
     .card {
-      scroll-snap-align: start;
-      flex: 0 0 340px;
-      background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 1.2rem;
+      background: rgba(15,15,25,0.85);
+      border: 1px solid rgba(247,147,26,0.2);
+      border-radius: 8px;
       padding: 1.8rem;
-      transition: transform 0.2s, border-color 0.2s;
-      display: flex;
-      flex-direction: column;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      position: relative;
+      overflow: hidden;
     }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent, rgba(192,38,211,0.08), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
     .card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(247,147,26,0.3);
+      transform: translateY(-12px) scale(1.02);
+      border-color: var(--neon-orange);
+      box-shadow: 0 0 40px rgba(247,147,26,0.3);
     }
-    .card .badge {
+
+    .card:hover::before { opacity: 1; }
+
+    .badge {
       display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0.25rem 0.7rem;
-      border-radius: 999px;
-      margin-bottom: 1rem;
-      width: fit-content;
-    }
-    .badge.vercel { background: rgba(0,100,255,0.15); color: #66aaff; }
-    .badge.render { background: rgba(70,200,130,0.15); color: #46c882; }
-    .card h3 {
-      font-size: 1.3rem;
+      font-size: 0.65rem;
       font-weight: 700;
-      margin-bottom: 0.3rem;
-    }
-    .card .domain {
-      font-size: 0.85rem;
-      color: #f7931a;
-      margin-bottom: 0.8rem;
-    }
-    .card .domain a {
-      color: inherit;
-      text-decoration: none;
-    }
-    .card .domain a:hover { text-decoration: underline; }
-    .card p {
-      font-size: 0.9rem;
-      color: #9999bb;
-      line-height: 1.6;
-      flex: 1;
-    }
-    .card .mock-screenshot {
-      width: 100%;
-      height: 140px;
-      border-radius: 0.7rem;
+      letter-spacing: 1.5px;
+      padding: 0.35rem 0.9rem;
+      border-radius: 9999px;
       margin-bottom: 1rem;
+      border: 1px solid;
+    }
+
+    .badge.vercel {
+      background: rgba(0,100,255,0.1);
+      color: #66aaff;
+      border-color: #66aaff;
+    }
+
+    .badge.render {
+      background: rgba(70,200,130,0.1);
+      color: #46c882;
+      border-color: #46c882;
+    }
+
+    .mock-screenshot {
+      height: 160px;
+      border-radius: 6px;
+      margin: 1rem 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.5rem;
-      opacity: 0.6;
+      font-size: 3.5rem;
+      background: #111;
+      border: 1px solid #333;
+      position: relative;
     }
-    .mock-screenshot.video { background: linear-gradient(135deg, #1a1a3e, #2a1a3e); }
-    .mock-screenshot.payment { background: linear-gradient(135deg, #1a2a1e, #0a3a1e); }
-    .mock-screenshot.admin { background: linear-gradient(135deg, #2a1a1e, #3e1a1a); }
-    .mock-screenshot.bridge { background: linear-gradient(135deg, #1a1a2e, #1a2a4e); }
-    .mock-screenshot.links { background: linear-gradient(135deg, #2a2a1a, #4e3a1a); }
-    .mock-screenshot.viewer { background: linear-gradient(135deg, #1a2a2a, #0a3a3a); }
-    .mock-screenshot.subscribe { background: linear-gradient(135deg, #2a1a2a, #3e1a4e); }
-    .mock-screenshot.newsletter { background: linear-gradient(135deg, #1a1a2a, #2a2a4e); }
-    .mock-screenshot.points { background: linear-gradient(135deg, #2a2a2a, #4e4e1a); }
 
-    /* ─── Architecture ─── */
+    .mock-screenshot::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent, rgba(255,255,255,0.05));
+      pointer-events: none;
+    }
+
+    .card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.4rem;
+      color: var(--vintage-cream);
+    }
+
+    .domain {
+      color: var(--neon-orange);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      word-break: break-all;
+    }
+
+    .domain a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .domain a:hover {
+      text-decoration: underline;
+      color: var(--neon-blue);
+    }
+
+    .card p {
+      color: #999;
+      line-height: 1.55;
+      font-size: 0.95rem;
+    }
+
+    /* Architecture */
+    .arch-container {
+      margin-top: 3rem;
+      position: relative;
+    }
+
     .arch-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-    .arch-box {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 0.8rem;
-      padding: 1.2rem;
-      text-align: center;
-    }
-    .arch-box .icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
-    .arch-box h4 { font-size: 0.95rem; font-weight: 600; }
-    .arch-box p { font-size: 0.8rem; color: #7777aa; margin-top: 0.3rem; }
-    .arch-arrow {
-      text-align: center;
-      color: #555;
-      font-size: 1.4rem;
-      padding: 0.3rem 0;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
     }
 
-    /* ─── Donation ─── */
+    .arch-box {
+      background: rgba(20,20,35,0.6);
+      border: 1px solid rgba(0,240,255,0.15);
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .arch-box:hover {
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 25px rgba(0,240,255,0.2);
+    }
+
+    .arch-box .icon {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .arch-connector {
+      text-align: center;
+      font-size: 2rem;
+      color: #555;
+      margin: 1.5rem 0;
+      letter-spacing: 4px;
+    }
+
+    /* Donation */
     .donation-section {
       text-align: center;
-      padding: 5rem 1.5rem;
-      background: radial-gradient(ellipse at center, rgba(247,147,26,0.06), transparent 60%);
+      padding: 6rem 1.5rem;
+      background: linear-gradient(to bottom, transparent, rgba(247,147,26,0.05));
     }
-    .donation-section h2 { margin-bottom: 0.5rem; }
-    .donation-section p { color: #8888aa; margin-bottom: 2rem; }
-    .donation-wrapper {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 1rem;
-      padding: 2rem;
-      display: inline-block;
-    }
-    .donation-wrapper img { max-width: 100%; height: auto; }
 
-    /* ─── Footer ─── */
+    .donation-wrapper {
+      background: #111;
+      border: 2px solid var(--neon-orange);
+      border-radius: 12px;
+      padding: 2.5rem;
+      display: inline-block;
+      box-shadow: 0 0 60px rgba(247,147,26,0.2);
+    }
+
+    /* Footer */
     footer {
       text-align: center;
-      padding: 2rem;
-      color: #444466;
+      padding: 3rem 1rem;
+      color: #555;
       font-size: 0.85rem;
+      border-top: 1px solid #222;
     }
 
+    /* Responsive tweaks */
     @media (max-width: 640px) {
-      .card { flex: 0 0 280px; }
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      .card {
+        margin: 0 auto;
+        max-width: 340px;
+      }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══ HERO ═══ -->
-<div class="hero">
-  <h1>OM43</h1>
-  <p class="tagline">
-    Un écosystème microservices — vidéo, paiements, accès, newsletters —
-    déployé sur <strong style="color:#66aaff">Vercel</strong> et <strong style="color:#46c882">Render</strong>.
-  </p>
-  <p class="scroll-hint">↓ découvrir</p>
-</div>
-
-<!-- ═══ CAROUSEL ═══ -->
-<section>
-  <h2>Projets</h2>
-  <p class="sub">Les services qui composent l'infrastructure OM43</p>
-  <div class="carousel">
-
-    <div class="card">
-      <span class="badge vercel">Vercel</span>
-      <div class="mock-screenshot video">🎬</div>
-      <h3>Super Vidéothèque</h3>
-      <div class="domain"><a href="https://video.onlymatt.ca" target="_blank">video.onlymatt.ca</a></div>
-      <p>Plateforme vidéo Netflix-style : catalogue, previews, live streaming HLS, validation d'accès Payhip/NOWPayments.</p>
-    </div>
-
-    <div class="card">
-      <span class="badge render">Render</span>
-      <div class="mock-screenshot video">⚙️</div>
-      <h3>API Vidéothèque</h3>
-      <div class="domain">super-videotheque-api.onrender.com</div>
-      <p>Backend Express : médias, locations, Jitsi JWT, webhooks NOWPayments, analytics, alertes email.</p>
-    </div>
-
-    <div class="card">
-      <span class="badge vercel">Vercel</span>
-      <div class="mock-screenshot payment">💳</div>
-      <h3>Payment Hub</h3>
-      <div class="domain"><a href="https://payment.onlymatt.ca" target="_blank">payment.onlymatt.ca</a></div>
-      <p>Hub central de paiement/accès. Providers abstraits (Payhip, NOWPayments), validation publique, admin produits.</p>
-    </div>
-
-    <div class="card">
-      <span class="badge vercel">Vercel</span>
-      <div class="mock-screenshot links">🔗</div>
-      <h3>Project Links</h3>
-      <div class="domain"><a href="https://projects.onlymatt.ca" target="_blank">projects.onlymatt.ca</a></div>
-      <p>Landing pages avec contenu protégé. Validation via payment-only, embeds paiement et abonnement.</p>
-    </div>
-
-    <div class="card">
-      <span class="badge vercel">Vercel</span>
-      <div class="mock-screenshot bridge">🌉</div>
-      <h3>Read-Only Bridge</h3>
-      <div class="domain"><a href="https://read.onlymatt.ca" target="_blank">read.onlymatt.ca</a></div>
-      <p>API pont entre only-admin et les consumers. Lit la DB Turso, signe les URLs Bunny CDN selon la provenance.</p>
-    </div>
-
-    <div class="card">
-      <span class="badge vercel">Vercel</span>
-      <div class="mock-screenshot admin">🛠️</div>
-      <h3>Only Admin</h3>
-      <div class="domain"><a href="https://admin.onlymatt.ca" target="_blank">admin.onlymatt.ca</a></div>
-      <p>Interface d'administration : upload vidéos Bunny Stream, gestion catalogue, tags, metadata AI coach.</p>
-    </div>
-
-    <div class="card">
-      <span class="badge vercel">Vercel</span>
-      <div class="mock-screenshot viewer">👁️</div>
-      <h3>Viewer Only</h3>
-      <div class="domain">viewer-only.vercel.app</div>
-      <p>Galerie média publique. Grille masonry, lecture vidéo, age gate 18+, consommation read-only.</p>
-    </div>
-
-    <div class="card">
-      <span class="badge vercel">Vercel</span>
-      <div class="mock-screenshot subscribe">📧</div>
-      <h3>Subscribe OnlyMatt</h3>
-      <div class="domain">subscribe-onlymatt.vercel.app</div>
-      <p>Système de collecte email + vérification 6 chiffres. Envoie liens magiques via Resend. Embed subscribe-button.js.</p>
-    </div>
-
-    <div class="card">
-      <span class="badge vercel">Vercel</span>
-      <div class="mock-screenshot newsletter">📰</div>
-      <h3>Tantric Newsletter</h3>
-      <div class="domain">tantric-newsletter.vercel.app</div>
-      <p>Newsletter automatique. Récupère les posts WordPress, envoie via Resend. Bilingue FR/EN, page désabonnement.</p>
-    </div>
-
-    <div class="card">
-      <span class="badge vercel">Vercel</span>
-      <div class="mock-screenshot points">⭐</div>
-      <h3>Auth Payment System</h3>
-      <div class="domain"><a href="https://points.onlymatt.ca" target="_blank">points.onlymatt.ca</a></div>
-      <p>Système de points Payhip + OAuth Google. Solde par email, historique transactions, admin packages.</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- ═══ ARCHITECTURE ═══ -->
-<section>
-  <h2>Architecture</h2>
-  <p class="sub">Comment les services communiquent entre eux</p>
-
-  <div class="arch-grid">
-    <div class="arch-box">
-      <div class="icon">🛠️</div>
-      <h4>Only Admin</h4>
-      <p>Écrit dans la DB Turso</p>
-    </div>
-    <div class="arch-box">
-      <div class="icon">🌉</div>
-      <h4>Read-Only Bridge</h4>
-      <p>Lit la DB, signe les URLs CDN</p>
-    </div>
-    <div class="arch-box">
-      <div class="icon">👁️</div>
-      <h4>Viewer / Projects / Vidéothèque</h4>
-      <p>Consomment read-only + payment-only</p>
-    </div>
-    <div class="arch-box">
-      <div class="icon">💳</div>
-      <h4>Payment Hub</h4>
-      <p>Source de vérité pour produits & accès</p>
+  <!-- HERO -->
+  <div class="hero">
+    <div style="position:relative;z-index:3">
+      <h1 class="glitch">OM43</h1>
+      <p class="tagline">
+        ARCHIVES NUMÉRIQUES • MICRO-SERVICES • 2026<br>
+        Entre néon futuriste et bande magnétique vintage
+      </p>
+      <p class="scroll-hint">SCROLL ↓</p>
     </div>
   </div>
 
-  <div class="arch-arrow">↓</div>
+  <!-- PROJECTS -->
+  <section>
+    <h2>PROJETS</h2>
+    <p class="sub">Fragments d’un écosystème vivant</p>
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-top:1rem">
-    <div class="arch-box" style="background:rgba(0,100,255,0.05);border-color:rgba(0,100,255,0.1)">
-      <h4 style="color:#66aaff">Vercel</h4>
-      <p>10 projets serverless<br>Frontends + APIs légères</p>
+    <div class="projects-grid">
+      <div class="card">
+        <span class="badge vercel">VERCEL</span>
+        <div class="mock-screenshot" style="background: linear-gradient(135deg, #1a0033, #330022);">🎬</div>
+        <h3>SUPER VIDÉOTHÈQUE</h3>
+        <div class="domain"><a href="https://video.onlymatt.ca" target="_blank">video.onlymatt.ca</a></div>
+        <p>Netflix analogique. HLS, previews, Payhip/NOWPayments. Une expérience cinématographique brute.</p>
+      </div>
+
+      <div class="card">
+        <span class="badge render">RENDER</span>
+        <div class="mock-screenshot" style="background: linear-gradient(135deg, #002211, #113322);">⚙️</div>
+        <h3>API VIDÉOTHÈQUE</h3>
+        <div class="domain">super-videotheque-api.onrender.com</div>
+        <p>Backend Express lourd. Webhooks, Jitsi, analytics, alertes. Le cœur battant du système.</p>
+      </div>
+
+      <div class="card">
+        <span class="badge vercel">VERCEL</span>
+        <div class="mock-screenshot" style="background: linear-gradient(135deg, #220011, #441122);">💳</div>
+        <h3>PAYMENT HUB</h3>
+        <div class="domain"><a href="https://payment.onlymatt.ca" target="_blank">payment.onlymatt.ca</a></div>
+        <p>Passerelle de paiement abstraite. Source de vérité pour tous les accès et produits.</p>
+      </div>
+
+      <div class="card">
+        <span class="badge vercel">VERCEL</span>
+        <div class="mock-screenshot" style="background: linear-gradient(135deg, #332211, #554422);">🔗</div>
+        <h3>PROJECT LINKS</h3>
+        <div class="domain"><a href="https://projects.onlymatt.ca" target="_blank">projects.onlymatt.ca</a></div>
+        <p>Portails protégés. Contenu exclusif derrière validation paiement.</p>
+      </div>
+
+      <div class="card">
+        <span class="badge vercel">VERCEL</span>
+        <div class="mock-screenshot" style="background: linear-gradient(135deg, #112233, #223355);">🌉</div>
+        <h3>READ-ONLY BRIDGE</h3>
+        <div class="domain"><a href="https://read.onlymatt.ca" target="_blank">read.onlymatt.ca</a></div>
+        <p>Pont sécurisé. Signature Bunny CDN selon provenance. Lecture seule.</p>
+      </div>
+
+      <div class="card">
+        <span class="badge vercel">VERCEL</span>
+        <div class="mock-screenshot" style="background: linear-gradient(135deg, #441111, #662222);">🛠️</div>
+        <h3>ONLY ADMIN</h3>
+        <div class="domain"><a href="https://admin.onlymatt.ca" target="_blank">admin.onlymatt.ca</a></div>
+        <p>Centre de contrôle. Upload Bunny Stream, metadata IA, gestion catalogue.</p>
+      </div>
+
+      <div class="card">
+        <span class="badge vercel">VERCEL</span>
+        <div class="mock-screenshot" style="background: linear-gradient(135deg, #113333, #225555);">👁️</div>
+        <h3>VIEWER ONLY</h3>
+        <div class="domain">viewer-only.vercel.app</div>
+        <p>Galerie publique brute. Masonry + lecture directe. Âge 18+.</p>
+      </div>
+
+      <div class="card">
+        <span class="badge vercel">VERCEL</span>
+        <div class="mock-screenshot" style="background: linear-gradient(135deg, #331133, #552255);">📧</div>
+        <h3>SUBSCRIBE ONLYMATT</h3>
+        <div class="domain">subscribe-onlymatt.vercel.app</div>
+        <p>Collecte email + vérification. Liens magiques Resend.</p>
+      </div>
+
+      <div class="card">
+        <span class="badge vercel">VERCEL</span>
+        <div class="mock-screenshot" style="background: linear-gradient(135deg, #112244, #223366);">📰</div>
+        <h3>TANTRIC NEWSLETTER</h3>
+        <div class="domain">tantric-newsletter.vercel.app</div>
+        <p>Newsletter automatique bilingue depuis WordPress via Resend.</p>
+      </div>
+
+      <div class="card">
+        <span class="badge vercel">VERCEL</span>
+        <div class="mock-screenshot" style="background: linear-gradient(135deg, #444411, #666622);">⭐</div>
+        <h3>AUTH PAYMENT SYSTEM</h3>
+        <div class="domain"><a href="https://points.onlymatt.ca" target="_blank">points.onlymatt.ca</a></div>
+        <p>Points Payhip + Google OAuth. Historique et packages.</p>
+      </div>
     </div>
-    <div class="arch-box" style="background:rgba(70,200,130,0.05);border-color:rgba(70,200,130,0.1)">
-      <h4 style="color:#46c882">Render</h4>
-      <p>1 backend Express<br>API lourde avec Turso</p>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section style="background:#0a0a0f;">
+    <h2>ARCHITECTURE</h2>
+    <p class="sub">Flux de données entre artefacts</p>
+
+    <div class="arch-container">
+      <div class="arch-grid">
+        <div class="arch-box">
+          <div class="icon">🛠️</div>
+          <h4 style="color:#f7931a">ONLY ADMIN</h4>
+          <p>Écriture dans Turso DB</p>
+        </div>
+        <div class="arch-box">
+          <div class="icon">🌉</div>
+          <h4 style="color:#00f0ff">READ-ONLY BRIDGE</h4>
+          <p>Lecture + signature CDN</p>
+        </div>
+        <div class="arch-box">
+          <div class="icon">👁️</div>
+          <h4 style="color:#c026d3">VIEWER / PROJECTS</h4>
+          <p>Consommation read-only</p>
+        </div>
+        <div class="arch-box">
+          <div class="icon">💳</div>
+          <h4 style="color:#f7931a">PAYMENT HUB</h4>
+          <p>Vérité absolue des accès</p>
+        </div>
+      </div>
+
+      <div class="arch-connector">⇄ ⇄ ⇄</div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;text-align:center">
+        <div style="padding:1.5rem;border:1px solid rgba(102,170,255,0.2);border-radius:8px">
+          <strong style="color:#66aaff">VERCEL</strong><br>
+          <small>10 frontends serverless</small>
+        </div>
+        <div style="padding:1.5rem;border:1px solid rgba(70,200,130,0.2);border-radius:8px">
+          <strong style="color:#46c882">RENDER</strong><br>
+          <small>Backend Express lourd</small>
+        </div>
+        <div style="padding:1.5rem;border:1px solid rgba(247,147,26,0.2);border-radius:8px">
+          <strong style="color:#f7931a">BUNNY CDN</strong><br>
+          <small>Streaming signé</small>
+        </div>
+        <div style="padding:1.5rem;border:1px solid rgba(160,160,255,0.2);border-radius:8px">
+          <strong style="color:#a0a0ff">TURSO</strong><br>
+          <small>SQLite edge</small>
+        </div>
+      </div>
     </div>
-    <div class="arch-box" style="background:rgba(247,147,26,0.05);border-color:rgba(247,147,26,0.1)">
-      <h4 style="color:#f7931a">Bunny CDN</h4>
-      <p>Stream vidéo + Storage<br>Signé selon provenance</p>
-    </div>
-    <div class="arch-box" style="background:rgba(100,100,200,0.05);border-color:rgba(100,100,200,0.1)">
-      <h4 style="color:#8888cc">Turso DB</h4>
-      <p>5 bases SQLite edge<br>Média, paiements, users</p>
+  </section>
+
+  <!-- DONATION -->
+  <div class="donation-section">
+    <h2>SOUTENIR L’ARCHIVE</h2>
+    <p style="max-width:460px;margin:0 auto 2.5rem;color:#888">Contribuez à la préservation de cet écosystème numérique</p>
+    <div class="donation-wrapper">
+      <a href="https://nowpayments.io/donation?api_key=a4b2370d-93d4-45a2-9f93-25eb3c7fc408" target="_blank" rel="noreferrer noopener">
+        <img src="https://nowpayments.io/images/embeds/donation-button-white.svg" alt="Donation NOWPayments" style="max-width:280px">
+      </a>
     </div>
   </div>
-</section>
 
-<!-- ═══ DONATION ═══ -->
-<div class="donation-section">
-  <h2>Soutenir</h2>
-  <p>Contribuez au projet par donation en cryptomonnaie</p>
-  <div class="donation-wrapper">
-    <a href="https://nowpayments.io/donation?api_key=a4b2370d-93d4-45a2-9f93-25eb3c7fc408" target="_blank" rel="noreferrer noopener">
-      <img src="https://nowpayments.io/images/embeds/donation-button-white.svg" alt="Cryptocurrency & Bitcoin donation button by NOWPayments">
-    </a>
-  </div>
-</div>
-
-<footer>
-  OM43 — Propulsé par Vercel, Render, Turso, Bunny CDN & NOWPayments
-</footer>
+  <footer>
+    OM43 • 2026 • VERCEL • RENDER • TURSO • BUNNY • NOWPAYMENTS<br>
+    <span style="font-size:0.7rem;opacity:0.6">Artefact digital — édition limitée</span>
+  </footer>
 
 </body>
 </html>
